@@ -24,13 +24,11 @@ public class CalendarController {
 
     private static final int[] monthMap = {1,2,3,4,5,6,7,8,9,10,11,12};
 
-    @RequestMapping("test")
-    @ResponseBody
-    public String test(){
-        JSONArray arr = new JSONArray();
-        arr.addAll(flagOfDayRepository.findAll());
-        return arr.toJSONString();
+    @RequestMapping("/")
+    public String index(){
+        return "index";
     }
+
 
     @RequestMapping("mycalendar")
     public String demo(@RequestParam int year,@RequestParam int month, Model model){
