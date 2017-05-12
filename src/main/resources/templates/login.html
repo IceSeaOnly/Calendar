@@ -103,7 +103,9 @@
     }
     if(curUrl.indexOf("regSuccess") != -1){
         $("#errInfo").text("注册成功，请登录 :)");
-        $("#errInfo").style("color:green");
+    }
+    if(curUrl.indexOf("needLogin") != -1){
+        $("#errInfo").text("请先登录！");
     }
     </script>
 </div>

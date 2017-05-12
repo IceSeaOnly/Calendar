@@ -34,12 +34,12 @@ public class CalendarController {
     public String demo(@RequestParam int year,@RequestParam int month, Model model){
         Calendar calendar = Calendar.getInstance();
 
-        if(year > 0 && month > 0){
+        if(year >= 0 && month >= 0){
             year = year%2100;
             month = month%12;
         }else{
             year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH)+1;
+            month = calendar.get(Calendar.MONTH);
         }
 
         model.addAttribute("todayYear",calendar.get(Calendar.YEAR));

@@ -18,7 +18,7 @@ public class ProduceCalendar {
         if(year > 0)
             calendar.set(Calendar.YEAR,year);
         if(month > 0)
-            calendar.set(Calendar.MONTH,month-1);
+            calendar.set(Calendar.MONTH,month);
         calendar.set(Calendar.DAY_OF_MONTH,1);
         int firstDayOfMonthInWeek = week[calendar.get(Calendar.DAY_OF_WEEK)];
         int daysOfThisMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
