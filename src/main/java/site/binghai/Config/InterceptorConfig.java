@@ -13,7 +13,6 @@ import site.binghai.Interceptors.EncodingInter;
  * 全局UTF-8编码拦截器
  */
 @Configuration
-@EnableWebMvc
 public class InterceptorConfig extends WebMvcConfigurerAdapter{
 
     @Bean
@@ -24,6 +23,17 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(encodingInterceptor());
+//                .excludePathPatterns(
+//                        "/**/*.css",
+//                        "/**/*.js",
+//                        "/**/*.png",
+//                        "/**/*.scss",
+//                        "/**/*.eot",
+//                        "/**/*.svg",
+//                        "/**/*.ttf",
+//                        "/**/*.woff",
+//                        "/**/*.jpg"
+//                );
         super.addInterceptors(registry);
     }
 }

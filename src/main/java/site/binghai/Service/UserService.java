@@ -18,7 +18,7 @@ public class UserService {
     UserRepository userRepository;
 
     public User validate(String phone, String password) {
-        List<User> ls = userRepository.findByPhoneAndPassword(phone,password);
+        List<User> ls = userRepository.findByPhoneAndPassword(phone,MD5.encryption(password));
         if(ls.size() == 0) return null;
         return ls.get(0);
     }

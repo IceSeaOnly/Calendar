@@ -13,6 +13,7 @@ public class EncodingInter extends HandlerInterceptorAdapter{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         request.setCharacterEncoding("UTF-8");
+        System.out.println("ENCODING...");
         return super.preHandle(request, response, handler);
     }
 }
