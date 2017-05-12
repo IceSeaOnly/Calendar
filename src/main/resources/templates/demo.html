@@ -1,23 +1,35 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" ng-app="">
+<html xmlns:th="http://www.thymeleaf.org">
  <head> 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
 
-  <link rel="stylesheet" type="text/css" href="font-awesome.min.css" /> 
-  <script type="text/javascript" src="jquery-1.11.2.min.js"></script> 
-  <script type="text/javascript" src="vue.min.js"></script> 
-  <link rel="stylesheet" type="text/css" href="bootstrap.min.css" /> 
-  <link rel="stylesheet" type="text/css" href="base.css" /> 
-  <link rel="stylesheet" type="text/css" href="plugin.css" /> 
-  <link rel="stylesheet" type="text/css" href="animate.css" /> 
-  <link rel="stylesheet" type="text/css" href="component_pc.css" /> 
-  <link rel="stylesheet" type="text/css" href="wqdhost.css" /> 
-  <link rel="stylesheet" type="text/css" href="edit-mall.css" /> 
-  <link rel="stylesheet" type="text/css" href="nanoscroller.css" /> 
-  <link rel="stylesheet" type="text/css" href="members.css" /> 
-  <link rel="stylesheet" type="text/css" href="wechat_login.css" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{font-awesome.min.css}" />
+  <script type="text/javascript" th:src="@{vue.min.js}"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{bootstrap.min.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{base.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{plugin.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{animate.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{component_pc.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{wqdhost.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{edit-mall.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{nanoscroller.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{members.css}" /> 
+  <link rel="stylesheet" type="text/css" th:href="@{wechat_login.css}" />
+
+  <!----- sweetAlert插件 ------>
+  <link rel="stylesheet" th:href="@{/example/buttons.css}">
+  <script th:src="@{/lib/jquery-2.1.1.min.js}" type="text/javascript"></script>
+  <script th:src="@{/dist/sweetalert2.min.js}"></script>
+  <link rel="stylesheet" th:href="@{/dist/sweetalert2.min.css}">
+  <!-- IE support -->
+  <script src="https://cdn.jsdelivr.net/es6-promise/latest/es6-promise.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/promise.prototype.finally/1.0.1/finally.js"></script>
+  <!----- sweetAlert插件end ------>
+
+  <script th:src="@{/datePicker.js}"></script>
+
   <style type="text/css" class="wqd1467107427575serial style-element style-e-common">#wqd1467107427575serial:before{content:' ';position:absolute;top:0;left:0;width:100%;height:100%;background-color:#334259;}</style>
   <style type="text/css" class="elementId14822346310830 style-element style-e-common">#elementId14822346310830 a{background-color:#ffa800;}</style>
   <style type="text/css" class="elementId1482234713803 style-element style-e-common">#elementId1482234713803 a{background-color:#59c7f9;}</style>
@@ -91,7 +103,7 @@
     <div class="yzmoveContent  ">
      <div class="wqdSectiondiv" data-type="wqdSectiondiv" partid="wqd1493114684638serial" id="wqd1493114684638serial" sectionname="日历" style="background-image: url(&quot;http://image.binghai.site/data/f_88630102.jpg&quot;); background-attachment: scroll; background-size: cover; background-position: center center; background-repeat: no-repeat;" wqdback_position="1">
       <section class="wqdBkEditos sectionV2 moveMainArea elementsContainer" style="height: 845px; margin: 0px auto; position: relative;" wqdimgurlos="http://image.binghai.site/data/f_88630102.jpg" wqdbgcoloros="#eee" data-maxzindex="98" wqdheight="845" bac_position="5" wqdbgattachment="0" wqdwidthlimit="0" wqdbgcolor="">
-       <div class="wqdelementEdit aniunveil" data-elementtype="freeRect" data-elemandgroup="true" elementid="elementId14931855591070" id="elementId14931855591070" data-zindex="3" style="width: 1077px; height: 711px; left: 62px; top: 81px; z-index: 3;" wqdhref="0" wqdpathfill="#ffffff"> 
+       <div class="wqdelementEdit aniunveil" data-elementtype="freeRect" data-elemandgroup="true" elementid="elementId14931855591070" id="elementId14931855591070" data-zindex="3" style="width: 1077px; height: 711px; left: 62px; top: 81px; z-index: 3;" wqdhref="0" wqdpathfill="#ffffff">
         <div class="wqdelementEditBox wqdAnimatedos" style=""> 
          <div class="wqd-freeRect" style="width:100%;height:100%;background-color:#4292cf;" color="rgb(66,146,207)"></div> 
         </div> 
@@ -136,160 +148,10 @@
 	   <!--------星期声明区结束----------->
 	   
 	   <!--------日期填充区----------->
-	   <!----ROW1----->
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 132px; top: 240px; z-index: 9;"> 
+
+       <div th:each="day:${days}" class="wqdelementEdit" th:style="'width: 69px; height: 36px; left:'+${day.leftOff}+'px; top: '+${day.topOff}+'px; z-index: 9;'">
         <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">1</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 282px; top: 240px; z-index: 14;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">2</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 432px; top: 240px; z-index: 15;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">3</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 582px; top: 240px; z-index: 16;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">4</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 732px; top: 240px; z-index: 17;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">5</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 882px; top: 240px; z-index: 18;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">6</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 1032px; top: 240px; z-index: 19;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">7</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 132px; top: 350px; z-index: 20;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">8</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 279.5px; top: 350px; z-index: 21;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">9</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 432px; top: 350px; z-index: 22;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">10</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 582px; top: 350px; z-index: 23;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">11</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 732px; top: 350px; z-index: 24;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">12</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 882px; top: 350px; z-index: 25;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">13</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 1032px; top: 350px; z-index: 26;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">14</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 132px; top: 460px; z-index: 27;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">15</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 279.5px; top: 460px; z-index: 28;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">16</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 432px; top: 460px; z-index: 29;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">17</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 582px; top: 460px; z-index: 30;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">18</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 732px; top: 460px; z-index: 31;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">19</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 882px; top: 460px; z-index: 32;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">20</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 1032px; top: 460px; z-index: 33;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">21</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 132px; top: 570px; z-index: 34;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">22</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 279.5px; top: 570px; z-index: 35;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">23</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 432px; top: 570px; z-index: 36;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">24</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 582px; top: 570px; z-index: 37;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">25</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 732px; top: 570px; z-index: 38;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">26</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 882px; top: 570px; z-index: 39;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">27</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 1032px; top: 570px; z-index: 40;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">28</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 132px; top: 680px; z-index: 41;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">29</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 279.5px; top: 680px; z-index: 42;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">30</span></h4> 
-        </div> 
-       </div>
-       <div class="wqdelementEdit" style="width: 69px; height: 36px; left: 432px; top: 680px; z-index: 43;"> 
-        <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;">31</span></h4> 
+         <h4 class="wqd-text-title4"><span style="color:#458ddf;" th:text="${day.day}"></span></h4>
         </div> 
        </div>
 	   <!--------日期填充区结束----------->
@@ -364,7 +226,7 @@
 	   
        <div class="wqdelementEdit" data-elementtype="text" data-elemandgroup="true" elementid="elementId14931927945120" id="elementId14931927945120" data-zindex="54" style="width: 222px; height: 25px; left: 505.5px; top: 99px; z-index: 54;"> 
         <div class="wqdelementEditBox" data-emptytexttemplate="article3" style="visibility: visible;">
-         <p class="wqd-text-article3" style="text-align: center;">Here is your title</p> 
+         <p class="wqd-text-article3" style="text-align: center;" th:text="${curYear}+'-'+${curMonth}"></p>
         </div> 
        </div>
 	   
@@ -410,22 +272,22 @@
       <div class="wqdelementEditBox" data-maxzindex="5">
        <div class="wqdelementEdit" data-elementtype="button" data-elemandgroup="true" elementid="elementId14822346310830" id="elementId14822346310830" data-zindex="1" style="width: 121px; height: 46px; left: 33px; top: 9px; z-index: 1;" wqdhref="2" wqdheight="46" wqdborderradius="6" wqdcolor="rgb(255, 255, 255)" wqdbgcolor="59c7f9" wqdbordercolor="rgb(255, 255, 255)" wqdon="false" wqdpage0="0"> 
         <div class="wqdelementEditBox"> 
-         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" href="#" style="border-radius: 6px;"> <em>添加事件</em> </a> 
+         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" onclick="addEvent()" style="border-radius: 6px;"> <em>添加事件</em> </a>
         </div> 
        </div>
        <div class="wqdelementEdit" data-elementtype="button" data-elemandgroup="true" elementid="elementId1482234713803" id="elementId1482234713803" data-zindex="2" style="width: 121px; height: 46px; left: 33px; top: 57px; z-index: 2;" wqdhref="2" wqdheight="46" wqdborderradius="6" wqdcolor="rgb(255, 255, 255)" wqdbgcolor="#59c7f9" wqdbordercolor="rgb(255, 255, 255)" wqdon="false" wqdpage0="17"> 
         <div class="wqdelementEditBox"> 
-         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" href="#" style="border-radius: 6px;"> <em>回到今天</em> </a> 
+         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" th:href="'mycalendar?year='+${todayYear}+'&month='+${todayMonth}" style="border-radius: 6px;"> <em>回到今天</em> </a>
         </div> 
        </div>
        <div class="wqdelementEdit" data-elementtype="button" data-elemandgroup="true" elementid="elementId1482234715118" id="elementId1482234715118" data-zindex="3" style="width: 121px; height: 46px; left: 33px; top: 105px; z-index: 3;" wqdhref="2" wqdheight="46" wqdborderradius="6" wqdcolor="rgb(255, 255, 255)" wqdbgcolor="#59c7f9" wqdbordercolor="rgb(255, 255, 255)" wqdon="false" wqdpage0="20"> 
         <div class="wqdelementEditBox"> 
-         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" href="#" style="border-radius: 6px;"> <em>上一月</em> </a> 
+         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" th:href="'mycalendar?year='+${lastYear}+'&month='+${lastMonth}" style="border-radius: 6px;"> <em>上一月</em> </a>
         </div> 
        </div>
        <div class="wqdelementEdit" data-elementtype="button" data-elemandgroup="true" elementid="elementId1482234715673" id="elementId1482234715673" data-zindex="4" style="width: 121px; height: 46px; left: 33px; top: 153px; z-index: 4;" wqdhref="3" wqdheight="46" wqdborderradius="6" wqdcolor="rgb(255, 255, 255)" wqdbgcolor="#59c7f9" wqdbordercolor="rgb(255, 255, 255)" wqdon="false" wqdpage0="0" targetnew="ture"> 
         <div class="wqdelementEditBox"> 
-         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" href="#" style="border-radius: 6px;" target="_blank"> <em>下一月</em> </a> 
+         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" th:href="'mycalendar?year='+${nextYear}+'&month='+${nextMonth}" style="border-radius: 6px;"> <em>下一月</em> </a>
         </div> 
        </div>
        
@@ -478,6 +340,142 @@
     </div>
    </div>
   </div>
-  
+  <!-- 隐藏显示部分 -->
+  <div style="display: none">
+   <input id="dateInputSelectForEvent"/>
+   <input id="dateInputSelectForFlag"/>
+  </div>
+  <script>
+      var calendar = new datePicker();
+      var calendar2 = new datePicker();
+      calendar.init({
+          'trigger': '#dateInputSelectForEvent', /*按钮选择器，用于触发弹出插件*/
+          'type': 'date',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+          'minDate':'1900-1-1',/*最小日期*/
+          'maxDate':'2100-12-31',/*最大日期*/
+          'onSubmit':function(){/*确认时触发事件*/
+              toAddEvent(calendar.value);
+          },
+          'onClose':function(){/*取消时触发事件*/
+          }
+      });
+      calendar2.init({
+          'trigger': '#dateInputSelectForFlag', /*按钮选择器，用于触发弹出插件*/
+          'type': 'date',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
+          'minDate':'1900-1-1',/*最小日期*/
+          'maxDate':'2100-12-31',/*最大日期*/
+          'onSubmit':function(){/*确认时触发事件*/
+              toAddFlag(calendar2.value);
+          },
+          'onClose':function(){/*取消时触发事件*/
+          }
+      });
+  </script>
+
+  <script>
+     function addEvent(){
+         swal({
+             title: '选择添加类型',
+             input: 'select',
+             inputOptions: {
+                 'add_even':'添加日程',
+                 'add_flag':'添加标志'
+             },
+             inputPlaceholder: '选择添加类型',
+             showCancelButton: true,
+             inputValidator: function(value) {
+                 return new Promise(function(resolve, reject) {
+                     if (value != '') {
+                         resolve();
+                     } else {
+                         reject('请选择添加类型！');
+                     }
+                 });
+             }
+         }).then(function(result) {
+             if (result == 'add_even') {
+                 $("#dateInputSelectForEvent").trigger("click");
+             }else if(result == 'add_flag'){
+                 $("#dateInputSelectForFlag").trigger("click");
+             }
+         })
+     }
+
+     function toAddEvent(time) {
+         swal({
+             title: '新建'+time+'日程的标题',
+             input: 'text',
+             showCancelButton: true,
+             inputValidator: function(value) {
+                 return new Promise(function(resolve, reject) {
+                     if (value) {
+                         resolve();
+                     } else {
+                         reject('你必须输入标题才能继续哦~');
+                     }
+                 });
+             }
+         }).then(function(result) {
+             if(result)
+              goOn2AddEvent(time,result);
+         });
+     }
+
+     function goOn2AddEvent(time, title) {
+         swal({
+             title: '继续'+time+'日程的具体内容',
+             input: 'textarea',
+             showCancelButton: true,
+             showLoaderOnConfirm: true,
+             inputValidator: function(value) {
+                 return new Promise(function(resolve, reject) {
+                     if (value) {
+                         resolve();
+                     } else {
+                         reject('你必须输入内容才能继续哦~');
+                     }
+                 });
+             },
+             preConfirm: function() {
+                 return new Promise(function(resolve) {
+                     setTimeout(function() {
+                         resolve();
+                     }, 2000);
+                 });
+             },
+             allowOutsideClick: false
+         }).then(function(result) {
+             console.log('success');
+         });
+     }
+
+     function toAddFlag(time) {
+         swal({
+             title: '新建'+time+'标志的标题',
+             input: 'text',
+             showCancelButton: true,
+             showLoaderOnConfirm: true,
+             inputValidator: function(value) {
+                 return new Promise(function(resolve, reject) {
+                     if (value) {
+                         resolve();
+                     } else {
+                         reject('你必须输入标题才能继续哦~');
+                     }
+                 });
+             },
+             preConfirm: function() {
+                 return new Promise(function(resolve) {
+                     setTimeout(function() {
+                         resolve();
+                     }, 2000);
+                 });
+             },
+             allowOutsideClick: false
+         }).then(function(result) {
+             console.log(result);
+         });
+     }
+ </script>
  </body>
 </html>
