@@ -59,7 +59,7 @@
 <div id="login">
     <div class="wrapper">
         <div class="login">
-            <form action="" method="post" class="container offset1 loginform" onsubmit="return validate()">
+            <form action="/vreg" method="post" class="container offset1 loginform" onsubmit="return validate()">
                 <input type="hidden" id="_validate" name="_validate" th:value="${session._validate}">
                 <div id="owl-login">
                     <div class="hand"></div>
@@ -94,6 +94,7 @@
                             <input id="repassword" type="password" name="repassword" placeholder="重复密码" tabindex="2" class="form-control input-medium">
                         </div>
                     </div>
+                    <span style="color:red" id="errInfo" ></span>
                 </div>
                 <div class="form-actions"><a href="/login" tabindex="5" class="btn pull-left btn-link text-muted">已有账号？</a>
                     <button type="submit" tabindex="4" class="btn btn-primary">立即注册</button>
@@ -101,7 +102,6 @@
             </form>
         </div>
     </div>
-    <script src="js/jquery.min.js"></script>
     <script>
     $(function() {
 
@@ -111,6 +111,11 @@
             $('#owl-login').removeClass('password');
         });
     });
+
+    var curUrl = window.location.href;
+    if(curUrl.indexOf("errInfo") != -1){
+        $("#errInfo").text("手机号已存在，无法注册，找回请选择忘记密码。");
+    }
     </script>
 </div>
 <!-- 代码 结束 -->

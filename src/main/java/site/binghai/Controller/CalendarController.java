@@ -32,12 +32,16 @@ public class CalendarController {
 
     @RequestMapping("mycalendar")
     public String demo(@RequestParam int year,@RequestParam int month, Model model){
-        year = year%2100;
-        month = month%12;
-        if(year < 0) year = 2017;
-        if(month < 0) month = 1;
-
         Calendar calendar = Calendar.getInstance();
+
+        if(year > 0 && month > 0){
+            year = year%2100;
+            month = month%12;
+        }else{
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH)+1;
+        }
+
         model.addAttribute("todayYear",calendar.get(Calendar.YEAR));
         model.addAttribute("todayMonth",calendar.get(Calendar.MONTH));
 
