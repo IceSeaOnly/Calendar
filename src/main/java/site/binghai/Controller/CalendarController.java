@@ -1,17 +1,19 @@
 package site.binghai.Controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import site.binghai.Dao.FlagOfDayRepository;
-import site.binghai.Entity.Month;
+import site.binghai.Entity.DayInCalendar;
+import site.binghai.Entity.User;
+import site.binghai.Service.FlagOfDayService;
+import site.binghai.Utils.Month;
 import site.binghai.Utils.ProduceCalendar;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -20,7 +22,7 @@ import java.util.Calendar;
 @Controller
 public class CalendarController {
     @Autowired
-    FlagOfDayRepository flagOfDayRepository;
+    FlagOfDayService flagOfDayService;
 
     private static final int[] monthMap = {1,2,3,4,5,6,7,8,9,10,11,12};
 
@@ -31,7 +33,7 @@ public class CalendarController {
 
 
     @RequestMapping("mycalendar")
-    public String demo(@RequestParam int year,@RequestParam int month, Model model){
+    public String demo(@RequestParam int year, @RequestParam int month, Model model, HttpSession session){
         Calendar calendar = Calendar.getInstance();
 
         if(year >= 0 && month >= 0){
@@ -48,9 +50,12 @@ public class CalendarController {
         calendar.set(Calendar.YEAR,year);
         calendar.set(Calendar.MONTH,month);
 
-        model.addAttribute("days", Month.makeMonthDays(new ProduceCalendar().produceCalendar(year,month)));
-        model.addAttribute("curYear",calendar.get(Calendar.YEAR));
-        model.addAttribute("curMonth",monthMap[calendar.get(Calendar.MONTH)]);
+        ArrayList<DayInCalendar> arr = Month.makeMonthDays(new ProduceCalendar().produceCalendar(year,month));
+        model.addAttribute("days", arr);
+        model.addAttribute("curYear",year);
+        model.addAttribute("curMonth",monthMap[month]);
+        session.setAttribute("curYear",year);
+        session.setAttribute("curMonth",month);
 
         calendar.add(Calendar.MONTH,1);
         model.addAttribute("nextYear",calendar.get(Calendar.YEAR));
@@ -59,6 +64,16 @@ public class CalendarController {
         calendar.add(Calendar.MONTH,-2);
         model.addAttribute("lastYear",calendar.get(Calendar.YEAR));
         model.addAttribute("lastMonth",calendar.get(Calendar.MONTH));
+
+        User user = (User) session.getAttribute("user");
+        // 添加本月所有标志
+        model.addAttribute("flags",
+                flagOfDayService.getMonthFlags(
+                        user.getId(),
+                        year,
+                        monthMap[month]
+                )
+        );
         return "demo";
     }
 }

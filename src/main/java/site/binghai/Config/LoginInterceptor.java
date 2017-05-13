@@ -21,7 +21,7 @@ public class LoginInterceptor extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInter()).addPathPatterns("/mycalendar");
+        registry.addInterceptor(loginInter()).addPathPatterns("/mycalendar","/api/**");
         super.addInterceptors(registry);
     }
 }

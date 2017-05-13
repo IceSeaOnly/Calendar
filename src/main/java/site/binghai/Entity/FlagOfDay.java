@@ -17,12 +17,20 @@ public class FlagOfDay {
     private int userId;
     private String name;
     private Long time;
+    private int wxOff;
+    private int wyOff;
+    private int xOff;
+    private int yOff;
     private boolean available;
 
-    public FlagOfDay(int userId, String name, Long time, boolean available) {
+    public FlagOfDay(int userId, String name, Long time, int wxOff, int wyOff, int xOff, int yOff, boolean available) {
         this.userId = userId;
         this.name = name;
         this.time = time;
+        this.wxOff = wxOff;
+        this.wyOff = wyOff;
+        this.xOff = xOff;
+        this.yOff = yOff;
         this.available = available;
     }
 
@@ -67,5 +75,38 @@ public class FlagOfDay {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public int getxOff() {
+        return xOff;
+    }
+
+    public void setxOff(int xOff) {
+        this.xOff = xOff;
+    }
+
+    public int getyOff() {
+        return yOff;
+    }
+
+    public void setyOff(int yOff) {
+        this.yOff = yOff;
+    }
+
+    public int getWyOff() {
+        return wyOff;
+    }
+
+    public void setWyOff(int wyOff) {
+        this.wyOff = wyOff;
+    }
+
+    public int getWxOff() {
+
+        return wxOff;
+    }
+
+    public void setWxOff(int wxOff) {
+        this.wxOff = wxOff;
     }
 }

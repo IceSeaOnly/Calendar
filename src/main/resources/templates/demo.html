@@ -3,10 +3,9 @@
  <head> 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> 
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
-  <script type="text/javascript" th:src="@{vue.min.js}"></script>
+  <script type="text/javascript" src="http://cdn.jsdelivr.net/vue/1.0.7/vue.min.js"></script>
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/plugin.css}" />
@@ -28,7 +27,7 @@
   <script src="https://cdn.jsdelivr.net/promise.prototype.finally/1.0.1/finally.js"></script>
   <!----- sweetAlert插件end ------>
 
-  <script th:src="@{/js/datePicker.js}"></script>
+
 
   <style type="text/css" class="wqd1467107427575serial style-element style-e-common">#wqd1467107427575serial:before{content:' ';position:absolute;top:0;left:0;width:100%;height:100%;background-color:#334259;}</style>
   <style type="text/css" class="elementId14822346310830 style-element style-e-common">#elementId14822346310830 a{background-color:#ffa800;}</style>
@@ -95,9 +94,9 @@
   <title>TITLE</title> 
   
  </head> 
- <body class="" style="position: relative;"> 
-  
- 
+ <body class="" style="position: relative;">
+
+
   <div class="wqdView wqdCenterView">
    <div class="wqdAreaView">
     <div class="yzmoveContent  ">
@@ -151,7 +150,7 @@
 
        <div th:each="day:${days}" class="wqdelementEdit" th:style="'width: 69px; height: 36px; left:'+${day.leftOff}+'px; top: '+${day.topOff}+'px; z-index: 9;'">
         <div class="wqdelementEditBox" data-emptytexttemplate="title4" style="visibility: visible;">
-         <h4 class="wqd-text-title4"><span style="color:#458ddf;" th:text="${day.day}"></span></h4>
+         <a th:href="'javascript:addFunc('+${day.day}+')'"><h4 class="wqd-text-title4"><span style="color:#458ddf;"  th:text="${day.day}"></span></h4></a>
         </div> 
        </div>
 	   <!--------日期填充区结束----------->
@@ -234,6 +233,25 @@
        
 	   
 	   <!--------事件结束------->
+
+
+	   <!--------标志开始------->
+
+       <div th:each="flag:${flags}" class="wqdelementEdit" data-elementtype="text" data-elemandgroup="true" elementid="elementId14932012781300" id="elementId14932012781300" data-zindex="85" th:style="'width: 28px; height: 32px; left: '+${flag.wxOff}+'px; top: '+${flag.wyOff}+'px; z-index: 85;'">
+        <div class="wqdelementEditBox" data-emptytexttemplate="article3" style="visibility: visible;">
+         <span style="color:#FFFFFF;"><span style="font-size:12px;" th:text="${flag.name}"></span></span>
+        </div>
+       </div>
+       <div th:each="flag:${flags}" class="wqdelementEdit" data-elementtype="svg" data-elemandgroup="true" elementid="elementId14932013229550" id="elementId14932013229550" data-zindex="82" th:style="'width: 30px; height: 62px; left: '+${flag.xOff}+'px; top: '+${flag.yOff}+'px; z-index: 82;'" wqdhref="0" wqdpathfill="#d9534f">
+        <div class="wqdelementEditBox">
+         <svg class="wqd-svg" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 294 426.67">
+          <polygon fill="#e87660" points="294 426.67 147 299.09 0 426.67 0 0 294 0 294 426.67"></polygon>
+         </svg>
+        </div>
+       </div>
+
+       <!--------标志结束------->
+
 	   <!--------耳朵开始------->
        <div class="wqdelementEdit" data-elementtype="freeRect" data-elemandgroup="true" elementid="elementId1493200774566" id="elementId1493200774566" data-zindex="83" style="width: 80px; height: 30px; left: 879.5px; top: 51px; z-index: 83;" wqdhref="0" wqdpathfill="#65a1e7"> 
         <div class="wqdelementEditBox"> 
@@ -340,40 +358,16 @@
     </div>
    </div>
   </div>
-  <!-- 隐藏显示部分 -->
-  <div style="display: none">
-   <input id="dateInputSelectForEvent"/>
-   <input id="dateInputSelectForFlag"/>
-  </div>
-  <script>
-      var calendar = new datePicker();
-      var calendar2 = new datePicker();
-      calendar.init({
-          'trigger': '#dateInputSelectForEvent', /*按钮选择器，用于触发弹出插件*/
-          'type': 'date',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
-          'minDate':'1900-1-1',/*最小日期*/
-          'maxDate':'2100-12-31',/*最大日期*/
-          'onSubmit':function(){/*确认时触发事件*/
-              toAddEvent(calendar.value);
-          },
-          'onClose':function(){/*取消时触发事件*/
-          }
-      });
-      calendar2.init({
-          'trigger': '#dateInputSelectForFlag', /*按钮选择器，用于触发弹出插件*/
-          'type': 'date',/*模式：date日期；datetime日期时间；time时间；ym年月；*/
-          'minDate':'1900-1-1',/*最小日期*/
-          'maxDate':'2100-12-31',/*最大日期*/
-          'onSubmit':function(){/*确认时触发事件*/
-              toAddFlag(calendar2.value);
-          },
-          'onClose':function(){/*取消时触发事件*/
-          }
-      });
-  </script>
 
-  <script>
-     function addEvent(){
+
+  <script th:inline="javascript">
+
+     var curYear = [[${curYear}]];
+     var curMonth = [[${curMonth}]];
+     function addEvent() {
+         swal('点击日期数字就可以操作了哦~')
+     }
+     function addFunc(day){
          swal({
              title: '选择添加类型',
              input: 'select',
@@ -394,9 +388,9 @@
              }
          }).then(function(result) {
              if (result == 'add_even') {
-                 $("#dateInputSelectForEvent").trigger("click");
+                 toAddEvent(curYear+'-'+curMonth+'-'+day);
              }else if(result == 'add_flag'){
-                 $("#dateInputSelectForFlag").trigger("click");
+                 toAddFlag(curYear+'-'+curMonth+'-'+day,day);
              }
          })
      }
@@ -449,7 +443,7 @@
          });
      }
 
-     function toAddFlag(time) {
+     function toAddFlag(time,day) {
          swal({
              title: '新建'+time+'标志的标题',
              input: 'text',
@@ -458,24 +452,31 @@
              inputValidator: function(value) {
                  return new Promise(function(resolve, reject) {
                      if (value) {
-                         resolve();
+                         resolve(value);
                      } else {
                          reject('你必须输入标题才能继续哦~');
                      }
                  });
              },
-             preConfirm: function() {
+             preConfirm: function(value) {
                  return new Promise(function(resolve) {
-                     setTimeout(function() {
-                         resolve();
-                     }, 2000);
+                     $.post("/api/addFlag",{'date':day,'name':value},function (data, status) {
+                         if(data == 'success')
+                          resolve();
+                         else
+                             reject('通讯失败:'+data);
+                     })
                  });
              },
              allowOutsideClick: false
          }).then(function(result) {
-             console.log(result);
+             window.location.reload();
          });
      }
+ </script>
+
+ <script>
+
  </script>
  </body>
 </html>

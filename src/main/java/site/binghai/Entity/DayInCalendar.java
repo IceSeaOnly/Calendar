@@ -1,19 +1,22 @@
 package site.binghai.Entity;
 
+import java.util.List;
+
 /**
  * Created by IceSea on 2017/5/10.
  * GitHub: https://github.com/IceSeaOnly
  * 日历中每天的表示元素
  */
 public class DayInCalendar {
-    int day;
-    int leftOff;
-    int topOff;
+    private int day;
+    private int leftOff;
+    private int topOff;
 
-    int flagWordX;
-    int flagWordY;
-    int flagX;
-    int flagY;
+    private int flagWordX;
+    private int flagWordY;
+    private int flagX;
+    private int flagY;
+
 
     public DayInCalendar(int day, int leftOff, int topOff, int flagWordX, int flagWordY, int flagX, int flagY) {
         this.day = day;
@@ -83,4 +86,5 @@ public class DayInCalendar {
     public void setFlagWordY(int flagWordY) {
         this.flagWordY = flagWordY;
     }
+
 }
