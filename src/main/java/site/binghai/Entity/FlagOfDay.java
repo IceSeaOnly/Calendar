@@ -3,6 +3,7 @@ package site.binghai.Entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * Created by IceSea on 2017/5/12.
@@ -17,6 +18,7 @@ public class FlagOfDay {
     private int userId;
     private String name;
     private Long time;
+    private Date addTime;
     private int wxOff;
     private int wyOff;
     private int xOff;
@@ -32,6 +34,7 @@ public class FlagOfDay {
         this.xOff = xOff;
         this.yOff = yOff;
         this.available = available;
+        this.addTime = new Date(System.currentTimeMillis());
     }
 
     public FlagOfDay() {
@@ -108,5 +111,13 @@ public class FlagOfDay {
 
     public void setWxOff(int wxOff) {
         this.wxOff = wxOff;
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
     }
 }

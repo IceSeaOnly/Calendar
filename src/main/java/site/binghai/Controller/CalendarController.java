@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import site.binghai.Dao.FlagOfDayRepository;
 import site.binghai.Entity.DayInCalendar;
+import site.binghai.Entity.FlagOfDay;
 import site.binghai.Entity.User;
+import site.binghai.Service.EventOfDayService;
 import site.binghai.Service.FlagOfDayService;
 import site.binghai.Utils.Month;
 import site.binghai.Utils.ProduceCalendar;
@@ -23,6 +25,8 @@ import java.util.Calendar;
 public class CalendarController {
     @Autowired
     FlagOfDayService flagOfDayService;
+    @Autowired
+    EventOfDayService eventOfDayService;
 
     private static final int[] monthMap = {1,2,3,4,5,6,7,8,9,10,11,12};
 
@@ -74,6 +78,25 @@ public class CalendarController {
                         monthMap[month]
                 )
         );
+        model.addAttribute("events",eventOfDayService.getMonthEvent(
+                user.getId(),
+                year,
+                monthMap[month]
+        ));
         return "demo";
+    }
+
+
+    @RequestMapping("detail")
+    public String detail(int type,int id,Model model){
+        if(type == 0){
+            // 标志
+            FlagOfDay flagOfDay = flagOfDayService.getFlagById(id);
+            model.addAttribute("flag",flagOfDay);
+            return "detailOfFlag";
+        }else{
+            // 事件
+            return "detail";
+        }
     }
 }

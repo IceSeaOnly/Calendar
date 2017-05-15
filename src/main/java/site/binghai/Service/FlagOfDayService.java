@@ -35,9 +35,10 @@ public class FlagOfDayService {
         Long min = TimeFormat.data2Timestamp(year+"-"+month+"-"+minDay);
         Long max = TimeFormat.data2Timestamp(year+"-"+month+"-"+maxDay);
         List<FlagOfDay> res = flagOfDayRepository.findByUserIdAndTimeBetween(uid,min,max);
-        System.out.println(min);
-        System.out.println(max);
-        System.out.println(res.size());
         return res;
+    }
+
+    public FlagOfDay getFlagById(int id) {
+        return flagOfDayRepository.getOne(id);
     }
 }

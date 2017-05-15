@@ -17,8 +17,11 @@ public class DayInCalendar {
     private int flagX;
     private int flagY;
 
+    private int topEventLeft;
+    private int topEventTop;
 
-    public DayInCalendar(int day, int leftOff, int topOff, int flagWordX, int flagWordY, int flagX, int flagY) {
+
+    public DayInCalendar(int day, int leftOff, int topOff, int flagWordX, int flagWordY, int flagX, int flagY,int tl,int tt) {
         this.day = day;
         this.leftOff = leftOff;
         this.topOff = topOff;
@@ -26,6 +29,8 @@ public class DayInCalendar {
         this.flagWordY = flagWordY;
         this.flagX = flagX;
         this.flagY = flagY;
+        this.topEventLeft = tl;
+        this.topEventTop = tt;
     }
 
     public DayInCalendar() {
@@ -87,4 +92,19 @@ public class DayInCalendar {
         this.flagWordY = flagWordY;
     }
 
+    public int getTopEventLeft() {
+        return topEventLeft;
+    }
+
+    public void setTopEventLeft(int topEventLeft) {
+        this.topEventLeft = topEventLeft;
+    }
+
+    public int getTopEventTop() {
+        return topEventTop;
+    }
+
+    public void setTopEventTop(int topEventTop) {
+        this.topEventTop = topEventTop;
+    }
 }

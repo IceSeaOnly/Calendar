@@ -15,6 +15,10 @@ public class Month {
     public static final int[] flagYoff = {202,331,439,552,661};
 
     /**
+     * 日程的底纹x坐标在数字的前方50.5处
+     * 纵坐标分别是数字 +37 +57 +77 最多显示3个
+     * */
+    /**
      * 用来生成一个月的日子
      * */
     public static ArrayList<DayInCalendar> makeMonthDays(int[][] days){
@@ -31,7 +35,9 @@ public class Month {
                                     leftOff[j]+55,
                                     flagYoff[i]+10,
                                     leftOff[j]+52,
-                                    flagYoff[i]));
+                                    flagYoff[i],
+                                    leftOff[j]-51,
+                                    topOff[i]+37));
                 }
             }
         }
