@@ -240,7 +240,7 @@
             th:elementid="'ICESEA'+${event.id}" th:id="'ICESEA'+${event.id}" data-zindex="68"
             th:style="'width: 140px; height: 20px; left: '+${event.x}+'px; top: '+${event.y}+'px; z-index: 68;'" wqdhref="3" wqdheight="36">
         <div class="wqdelementEditBox" style="">
-         <a class="wqd-button wqdComponentBtn1 on" wqdbtnborder="false" style="font-size: 13px;" th:href="'javascript:showDetail(\'detail?type=1&id='+${event.id}+'\',false)'"> <em th:text="${event.title}"></em></a>
+         <a class="wqd-button wqdComponentBtn1 on" wqdbtnborder="false" style="font-size: 13px;" th:href="'javascript:showDetail(\'detail?type=1&id='+${event.id}+'\',false,'+${event.id}+')'"> <em th:text="${event.title}"></em></a>
         </div>
        </div>
 	   <!--------事件结束------->
@@ -250,7 +250,7 @@
 
        <div th:each="flag:${flags}" class="wqdelementEdit" data-elementtype="text" data-elemandgroup="true" elementid="elementId14932012781300" id="elementId14932012781300" data-zindex="85" th:style="'width: 28px; height: 32px; left: '+${flag.wxOff}+'px; top: '+${flag.wyOff}+'px; z-index: 85;'">
         <div class="wqdelementEditBox" data-emptytexttemplate="article3" style="visibility: visible;">
-         <a th:href="'javascript:showDetail(\'detail?type=0&id='+${flag.id}+'\',true)'"><span style="color:#FFFFFF;"><span style="font-size:12px;" th:text="${flag.name}"></span></span></a>
+         <a th:href="'javascript:showDetail(\'detail?type=0&id='+${flag.id}+'\',true,'+${flag.id}+')'"><span style="color:#FFFFFF;"><span style="font-size:12px;" th:text="${flag.name}"></span></span></a>
         </div>
        </div>
        <div th:each="flag:${flags}" class="wqdelementEdit" data-elementtype="svg" data-elemandgroup="true" elementid="elementId14932013229550" id="elementId14932013229550" data-zindex="82" th:style="'width: 30px; height: 62px; left: '+${flag.xOff}+'px; top: '+${flag.yOff}+'px; z-index: 82;'" wqdhref="0" wqdpathfill="#d9534f">
@@ -523,12 +523,12 @@
  </script>
 
  <script>
-     function showDetail(url,a) {
+     function showDetail(url,a,id) {
          swal({
              width: 500,
              height: 550,
              html:
-             '<iframe src="'+url+'" width="450" height="450"> ',
+             '<iframe src="'+url+'" width="450" height="450" frameborder="no"> ',
              confirmButtonColor: '#3085d6',
              cancelButtonColor: '#d33',
              confirmButtonText: '删除',
@@ -537,6 +537,37 @@
              cancelButtonClass: 'btn btn-danger',
              showCancelButton: true,
              showConfirmButton: a
+         }).then(function (isConfim) {
+             if(isConfim)
+              deleteFlag(id);
+         })
+     }
+
+     function deleteFlag(fid) {
+         swal({
+             title: '你确定要删除吗?',
+             text: "这将无法撤销!",
+             type: 'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#3085d6',
+             cancelButtonColor: '#d33',
+             confirmButtonText: '是的',
+             cancleButtonText: '取消'
+         }).then(function(isConfirm) {
+             if (isConfirm) {
+                 $.get("/api/deleteFlag?fid="+fid,function (data, status) {
+                     if(data == 'success'){
+                         swal(
+                             '已删除',
+                             '该项已经删除.',
+                             'success'
+                         ).then(function () {
+                             window.location.reload();
+                         });
+                     }
+                 })
+
+             }
          })
      }
  </script>

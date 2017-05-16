@@ -7,6 +7,7 @@ import site.binghai.Entity.Event;
 import site.binghai.Entity.FlagOfDay;
 import site.binghai.Utils.TimeFormat;
 
+import javax.transaction.Transactional;
 import java.util.Calendar;
 import java.util.List;
 
@@ -38,12 +39,17 @@ public class EventOfDayService {
         int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Long min = TimeFormat.data2Timestamp(year+"-"+month+"-"+minDay);
         Long max = TimeFormat.data2Timestamp(year+"-"+month+"-"+maxDay);
-        List<Event> res = eventOfDayRepository.findByUserIdAndTimeBetween(id,min,max);
+        List<Event> res = eventOfDayRepository.findByUserIdAndAvailableAndTimeBetween(id,true,min,max);
         for (int i = 0; i < res.size(); i++) {
             if(res.get(i).getIndexInDay() > 2){
                 res.get(i).setTitle("+ 更多"+(res.get(i).getIndexInDay()-1)+"个");
             }
         }
         return res;
+    }
+
+    @Transactional
+    public void delete(int uid,int eid){
+        eventOfDayRepository.deleteEvent(uid,eid);
     }
 }

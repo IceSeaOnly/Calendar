@@ -1,7 +1,10 @@
 package site.binghai.Dao;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import site.binghai.Entity.FlagOfDay;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -9,5 +12,10 @@ import java.util.List;
  * GitHub: https://github.com/IceSeaOnly
  */
 public interface FlagOfDayRepository extends JpaRepository<FlagOfDay,Integer> {
-    public List<FlagOfDay> findByUserIdAndTimeBetween(int userid,long s,long e);
+    public List<FlagOfDay> findByUserIdAndAvailableAndAddTimeBetween(int userid,boolean b,long s,long e);
+
+    @Modifying
+    @Transactional
+    @Query("update FlagOfDay set available =false where userId=?2 and id = ?3")
+    public int deleteFlag(int uid,int fid);
 }

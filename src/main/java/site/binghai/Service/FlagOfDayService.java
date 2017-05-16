@@ -7,6 +7,7 @@ import site.binghai.Entity.DayInCalendar;
 import site.binghai.Entity.FlagOfDay;
 import site.binghai.Utils.TimeFormat;
 
+import javax.transaction.Transactional;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,11 +35,16 @@ public class FlagOfDayService {
         int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Long min = TimeFormat.data2Timestamp(year+"-"+month+"-"+minDay);
         Long max = TimeFormat.data2Timestamp(year+"-"+month+"-"+maxDay);
-        List<FlagOfDay> res = flagOfDayRepository.findByUserIdAndTimeBetween(uid,min,max);
+        List<FlagOfDay> res = flagOfDayRepository.findByUserIdAndAvailableAndAddTimeBetween(uid,true,min,max);
         return res;
     }
 
     public FlagOfDay getFlagById(int id) {
         return flagOfDayRepository.getOne(id);
+    }
+
+    @Transactional
+    public void delete(int id, int fid) {
+        flagOfDayRepository.deleteFlag(id,fid);
     }
 }

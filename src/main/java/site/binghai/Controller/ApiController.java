@@ -61,9 +61,6 @@ public class ApiController {
                            @RequestParam String name,
                            @RequestParam String content,
                            HttpSession session){
-        System.out.println(date);
-        System.out.println(name);
-        System.out.println(content);
 
         if(!noEmptyOrNull(name))
             return "数据格式错误!";
@@ -75,7 +72,6 @@ public class ApiController {
         Long ts = TimeFormat.data2Timestamp(y+"-"+(m+1)+"-"+date);
         User user = (User) session.getAttribute("user");
         int size = eventOfDayService.countEventInDay(user.getId(),ts);
-        System.out.println("SIZE="+size);
         int ex = day.getTopEventLeft();
         int ey = day.getTopEventTop()+(size>=2?2:size)*20;
         String type = (size>2?"hide":"show");
@@ -88,5 +84,20 @@ public class ApiController {
                         Colors.colors[color][1]
                         ,ex,ey,type,size));
         return "success";
+    }
+
+    @RequestMapping("deleteFlag")
+    public String deleteFlag(int fid,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        flagOfDayService.delete(user.getId(),fid);
+        return "success";
+    }
+
+    @RequestMapping("shouldReload")
+    public String shouldReload(HttpSession session){
+        Integer shouldReload = (Integer) session.getAttribute("shouldReload");
+        if(shouldReload == null || shouldReload < 1)
+            return "false";
+        return "true";
     }
 }

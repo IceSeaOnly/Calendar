@@ -25,6 +25,7 @@ public class Event {
     private int y;
     private int indexInDay;
     private String foo;
+    private boolean available;
 
     public Event(String title, String content, long time, int userId, String color,String onColor, int x, int y,String f,int indexInDay) {
         this.onColor = onColor;
@@ -38,6 +39,7 @@ public class Event {
         this.y = y;
         this.foo = f;
         this.indexInDay = indexInDay;
+        this.available = true;
     }
 
     public Event() {
@@ -137,5 +139,13 @@ public class Event {
 
     public void setOnColor(String onColor) {
         this.onColor = onColor;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
