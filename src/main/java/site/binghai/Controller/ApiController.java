@@ -87,7 +87,7 @@ public class ApiController {
     }
 
     @RequestMapping("deleteFlag")
-    public String deleteFlag(int fid,HttpSession session){
+    public String deleteFlag(@RequestParam int fid,HttpSession session){
         User user = (User) session.getAttribute("user");
         flagOfDayService.delete(user.getId(),fid);
         return "success";
@@ -95,9 +95,23 @@ public class ApiController {
 
     @RequestMapping("shouldReload")
     public String shouldReload(HttpSession session){
-        Integer shouldReload = (Integer) session.getAttribute("shouldReload");
-        if(shouldReload == null || shouldReload < 1)
+        Object o = session.getAttribute("shouldReload");
+        if(o == null) return "false";
+        int shouldReload = (int)o;
+        if(shouldReload < 1)
             return "false";
+        session.setAttribute("shouldReload",0);
         return "true";
+    }
+
+    @RequestMapping("deleteEvent")
+    public String deleteEvent(@RequestParam int id,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        int r = eventOfDayService.delete(user.getId(),id);
+        if(r > 0){
+            session.setAttribute("shouldReload",1);
+            eventOfDayService.resetEventTop(user.getId(),id);
+        }
+        return r > 0 ?"success":"false";
     }
 }

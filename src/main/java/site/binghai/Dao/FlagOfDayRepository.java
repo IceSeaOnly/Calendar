@@ -12,10 +12,10 @@ import java.util.List;
  * GitHub: https://github.com/IceSeaOnly
  */
 public interface FlagOfDayRepository extends JpaRepository<FlagOfDay,Integer> {
-    public List<FlagOfDay> findByUserIdAndAvailableAndAddTimeBetween(int userid,boolean b,long s,long e);
+    public List<FlagOfDay> findByUserIdAndAvailableAndTimeBetween(int userid,boolean b,long s,long e);
 
     @Modifying
     @Transactional
-    @Query("update FlagOfDay set available =false where userId=?2 and id = ?3")
+    @Query("update FlagOfDay set available =false where userId=?1 and id = ?2")
     public int deleteFlag(int uid,int fid);
 }

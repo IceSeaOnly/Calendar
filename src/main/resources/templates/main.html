@@ -96,8 +96,11 @@
   <style type="text/css" class="elementId14938675388040 style-element style-e-center">#elementId14938675388040 .wqd-svg>*{fill:#d9534f;}</style>
   <style type="text/css" class="elementId1493950791254 style-element style-e-center">#elementId1493950791254 a{background-color:#d9534f;}#elementId1493950791254 .on:hover{background-color:#ba3b37;}</style>
 
-  <title>TITLE</title>
+  <title th:text="${username}+' '+${curYear}+'年'+${curMonth}+'月的日程表'"></title>
 
+  <style>
+   body{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体"}
+  </style>
  </head>
  <body class="" style="position: relative;">
 
@@ -230,7 +233,7 @@
 
        <div class="wqdelementEdit" data-elementtype="text" data-elemandgroup="true" elementid="elementId14931927945120" id="elementId14931927945120" data-zindex="54" style="width: 222px; height: 25px; left: 505.5px; top: 99px; z-index: 54;">
         <div class="wqdelementEditBox" data-emptytexttemplate="article3" style="visibility: visible;">
-         <p class="wqd-text-article3" style="text-align: center;" th:text="${curYear}+'-'+${curMonth}"></p>
+         <p class="wqd-text-article3" style="text-align: center;" th:text="${username}+' '+${curYear}+'年'+${curMonth}+'月的日程表'"></p>
         </div>
        </div>
 
@@ -301,7 +304,7 @@
       <div class="wqdelementEditBox" data-maxzindex="5">
        <div class="wqdelementEdit" data-elementtype="button" data-elemandgroup="true" elementid="elementId14822346310830" id="elementId14822346310830" data-zindex="1" style="width: 121px; height: 46px; left: 33px; top: 9px; z-index: 1;" wqdhref="2" wqdheight="46" wqdborderradius="6" wqdcolor="rgb(255, 255, 255)" wqdbgcolor="59c7f9" wqdbordercolor="rgb(255, 255, 255)" wqdon="false" wqdpage0="0">
         <div class="wqdelementEditBox">
-         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" onclick="addEvent()" style="border-radius: 6px;"> <em>添加事件</em> </a>
+         <a class="wqd-button wqdComponentBtn1" wqdbtnborder="false" ondragstart="return false;" onclick="addEvent()" style="border-radius: 6px;"> <em>使用说明</em> </a>
         </div>
        </div>
        <div class="wqdelementEdit" data-elementtype="button" data-elemandgroup="true" elementid="elementId1482234713803" id="elementId1482234713803" data-zindex="2" style="width: 121px; height: 46px; left: 33px; top: 57px; z-index: 2;" wqdhref="2" wqdheight="46" wqdborderradius="6" wqdcolor="rgb(255, 255, 255)" wqdbgcolor="#59c7f9" wqdbordercolor="rgb(255, 255, 255)" wqdon="false" wqdpage0="17">
@@ -376,7 +379,14 @@
      var curYear = [[${curYear}]];
      var curMonth = [[${curMonth}]];
      function addEvent() {
-         swal('点击日期数字就可以操作了哦~')
+         swal({
+             title: '欢迎使用!',
+             text: '增删日程/标志可以直接点击完成操作哦~',
+             imageUrl: 'http://image.binghai.site/data/f_74399033.jpg',
+             imageWidth: 400,
+             imageHeight: 200,
+             animation: false
+         })
      }
      function addFunc(day){
          swal({
@@ -493,7 +503,7 @@
                  resolve({
                      '0':'深蓝',
                      '1':'浅蓝',
-                     '2':'页绿',
+                     '2':'叶绿',
                      '3':'浅粉',
                      '4':'橘黄',
                      '5':'淡紫',
@@ -536,10 +546,12 @@
              confirmButtonClass: 'btn btn-success',
              cancelButtonClass: 'btn btn-danger',
              showCancelButton: true,
-             showConfirmButton: a
+             showConfirmButton: a,
          }).then(function (isConfim) {
              if(isConfim)
               deleteFlag(id);
+             else
+                 shouldReload();
          })
      }
 
@@ -568,6 +580,15 @@
                  })
 
              }
+         })
+     }
+
+     function shouldReload() {
+         $.get("/api/shouldReload",function (data, status) {
+             if(data == 'true')
+                 window.location.reload();
+             else
+                 console.log("not need to reload...")
          })
      }
  </script>

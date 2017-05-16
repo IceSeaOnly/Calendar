@@ -1,0 +1,53 @@
+﻿<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+  <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+  <style>
+    body{font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体"}
+  </style>
+</head>
+<body>
+<div class="page-group">
+  <div class="page page-current">
+    <div class="content">
+    <div class="card" th:each="event:${events}">
+      <div class="card-header" th:text="${event.title}"></div>
+      <div class="card-content">
+        <div class="card-content-inner" th:text="${event.content}">头和尾的卡片。卡头是用来显示一些额外的信息，或自定义操作卡标题和页脚。</div>
+      </div>
+      <div class="card-footer">
+        <span th:text="${event.addTime}"></span>
+        <a class="icon icon-remove pull-left" th:href="'javascript:toDelete('+${event.id}+')'"></a>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script>
+ function toDelete(id){
+     $.confirm('你确定要删除这个记录吗?', '删除日程',
+         function () {
+            $.get("/api/deleteEvent?id="+id,function(data,status){
+               if(data == 'success'){
+                   window.location.reload();
+               }else{
+                   $.toast("删除失败...");
+               }
+            });
+         }
+     );
+ }
+</script>
+</body>
+</html>

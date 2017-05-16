@@ -35,12 +35,13 @@ public class FlagOfDayService {
         int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Long min = TimeFormat.data2Timestamp(year+"-"+month+"-"+minDay);
         Long max = TimeFormat.data2Timestamp(year+"-"+month+"-"+maxDay);
-        List<FlagOfDay> res = flagOfDayRepository.findByUserIdAndAvailableAndAddTimeBetween(uid,true,min,max);
+        List<FlagOfDay> res = flagOfDayRepository.findByUserIdAndAvailableAndTimeBetween(uid,true,min,max);
         return res;
     }
 
-    public FlagOfDay getFlagById(int id) {
-        return flagOfDayRepository.getOne(id);
+    public FlagOfDay getFlagById(int userId, int id) {
+        FlagOfDay flagOfDay = flagOfDayRepository.getOne(id);
+        return flagOfDay.getUserId() == userId ? flagOfDay :null;
     }
 
     @Transactional

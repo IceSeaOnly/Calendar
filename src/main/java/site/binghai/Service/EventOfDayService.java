@@ -8,6 +8,7 @@ import site.binghai.Entity.FlagOfDay;
 import site.binghai.Utils.TimeFormat;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class EventOfDayService {
 
     public int countEventInDay(int id,Long ts) {
         System.out.println("ID="+id+",ts="+ts);
-        Long rs = eventOfDayRepository.countByUserIdAndTime(id,ts);
+        Long rs = eventOfDayRepository.countByAvailableAndUserIdAndTime(true,id,ts);
         return rs.intValue();
     }
 
@@ -49,7 +50,32 @@ public class EventOfDayService {
     }
 
     @Transactional
-    public void delete(int uid,int eid){
-        eventOfDayRepository.deleteEvent(uid,eid);
+    public int delete(int uid,int eid){
+        return eventOfDayRepository.deleteEvent(uid,eid);
+    }
+
+    public List<Event> listEvent(int uid, int eid) {
+        Event event = eventOfDayRepository.findOne(eid);
+        if(event == null) return null;
+        if(event.getUserId() != uid || !event.isAvailable()) return null;
+        List<Event> events = listEventOfDay(uid,event.getTime());
+        for (int i = 0; i < events.size(); i++) {
+            if(events.get(i).getId() == eid && events.size() > 3 && i > 2)
+                return events;
+        }
+        ArrayList<Event> es = new ArrayList<>();
+        es.add(event);
+        return es;
+    }
+
+    public List<Event> listEventOfDay(int uid,long ts){
+        return eventOfDayRepository.findByUserIdAndAvailableAndTime(uid,true,ts);
+    }
+
+    public void resetEventTop(int id, int eventId) {
+        Event event = eventOfDayRepository.findOne(eventId);
+        if(event == null || event.getUserId() != id) return;
+        eventOfDayRepository.updateEventTop(id,event.getTime(),event.getIndexInDay());
+        eventOfDayRepository.updateEventIndex(id,event.getTime(),event.getIndexInDay());
     }
 }

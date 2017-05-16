@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import site.binghai.Dao.FlagOfDayRepository;
 import site.binghai.Entity.DayInCalendar;
+import site.binghai.Entity.Event;
 import site.binghai.Entity.FlagOfDay;
 import site.binghai.Entity.User;
 import site.binghai.Service.EventOfDayService;
@@ -17,6 +18,7 @@ import site.binghai.Utils.ProduceCalendar;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/5/10.
@@ -70,6 +72,7 @@ public class CalendarController {
         model.addAttribute("lastMonth",calendar.get(Calendar.MONTH));
 
         User user = (User) session.getAttribute("user");
+        model.addAttribute("username",user.getName());
         // 添加本月所有标志
         model.addAttribute("flags",
                 flagOfDayService.getMonthFlags(
@@ -83,20 +86,25 @@ public class CalendarController {
                 year,
                 monthMap[month]
         ));
-        return "demo";
+        return "main";
     }
 
 
     @RequestMapping("detail")
-    public String detail(int type,int id,Model model){
+    public String detail(int type,int id,Model model,HttpSession session){
+        User user = (User) session.getAttribute("user");
         if(type == 0){
             // 标志
-            FlagOfDay flagOfDay = flagOfDayService.getFlagById(id);
+            FlagOfDay flagOfDay = flagOfDayService.getFlagById(user.getId(),id);
             model.addAttribute("flag",flagOfDay);
             return "detailOfFlag";
         }else{
             // 事件
-            return "detail";
+            List<Event> eventList = eventOfDayService.listEvent(user.getId(),id);
+            if(eventList == null || eventList.size() == 0)
+                return "emptyResult";
+            model.addAttribute("events",eventList);
+            return "detailOfEvent";
         }
     }
 }
